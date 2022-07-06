@@ -46,10 +46,13 @@ app.post('/shorturl/create', (req, res) => {
     create(res, data)
 })
 
+
 function create(res, data) {
     console.log(data)
     urlModel.create(data)
-        .then(() => { res.redirect('/') })
+        .then(() => {
+            res.render('show', { data: data })
+        })
         .catch(error => {
             data.short_url = shortUrl()
             create(res, data)
@@ -63,7 +66,7 @@ function shortUrl() {
     const letter = lowerCaseLetters + upperCaseLetters + numbers
     let result = ''
     for (let i = 1; i < 6; i++) {
-        const index = Math.round(Math.random() * letter.length)
+        const index = Math.round(Math.random() * letter.length - 1)
         result += letter[index]
     }
     return result
