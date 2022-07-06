@@ -27,6 +27,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 
 //==========引入mongoose
 require('./config/mongoose')
+const urlModel = require('./models/urlExample')
 
 
 //==========router
@@ -34,10 +35,26 @@ app.get('/', (req, res) => {
     res.render('index')
 })
 
+
+
 app.post('/shorturl/create', (req, res) => {
     const reqUrl = req.body['url']
-
+    const data = {
+        "long_url": reqUrl,
+        "short_url": shortUrl()
+    }
+    create(res, data)
 })
+
+function create(res, data) {
+    console.log(data)
+    urlModel.create(data)
+        .then(() => { res.redirect('/') })
+        .catch(error => {
+            data.short_url = shortUrl()
+            create(res, data)
+        })
+}
 
 function shortUrl() {
     const lowerCaseLetters = 'abcdefghijklmnopqrstuvwxyz'
@@ -45,15 +62,12 @@ function shortUrl() {
     const numbers = '1234567890'
     const letter = lowerCaseLetters + upperCaseLetters + numbers
     let result = ''
-
-
     for (let i = 1; i < 6; i++) {
         const index = Math.round(Math.random() * letter.length)
         result += letter[index]
     }
     return result
 }
-
 
 
 
