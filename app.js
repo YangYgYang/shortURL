@@ -46,6 +46,20 @@ app.post('/shorturl/create', (req, res) => {
     create(res, data)
 })
 
+app.get('/:id', (req, res) => {
+    // res.send('有進到動態路由')
+
+    urlModel.find({ short_url: req.params.id })
+        .lean()
+        .then((data) => {
+            console.log('data long就是', data[0].long_url)
+            res.send(`<script>window.location ="${data[0].long_url}"</script>`)
+
+        })
+        .catch(error => {
+            console.log(error)
+        })
+})
 
 function create(res, data) {
     console.log(data)
