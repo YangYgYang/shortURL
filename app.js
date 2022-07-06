@@ -37,24 +37,28 @@ app.get('/', (req, res) => {
 
 
 
-app.post('/shorturl/create', (req, res) => {
+app.post('/shorturl/create', async(req, res) => {
+    let onOff = false
     const reqUrl = req.body['url']
-    const data = {
-        "long_url": reqUrl,
-        "short_url": shortUrl()
-    }
-    create(res, data)
+    do {
+        const data = {
+            "long_url": reqUrl,
+            "short_url": shortUrl()
+        }
+        await urlModel.create(data)
+            .then(() => {
+                onOff = false
+                res.redirect('/')
+            })
+            .catch(error => {
+                console.log('錯誤')
+                onOff = true
+            })
+    } while (onOff)
+    console.log('結束了！')
 })
 
-function create(res, data) {
-    console.log(data)
-    urlModel.create(data)
-        .then(() => { res.redirect('/') })
-        .catch(error => {
-            data.short_url = shortUrl()
-            create(res, data)
-        })
-}
+
 
 function shortUrl() {
     const lowerCaseLetters = 'abcdefghijklmnopqrstuvwxyz'
