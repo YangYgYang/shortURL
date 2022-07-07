@@ -39,20 +39,31 @@ app.get('/', (req, res) => {
 
 app.post('/shorturl/create', (req, res) => {
     const reqUrl = req.body['url']
-    const data = {
-        "long_url": reqUrl,
-        "short_url": shortUrl()
-    }
-    create(res, data)
+    console.log('第一關', typeof(reqUrl), reqUrl)
+    urlModel.find({ long_url: reqUrl })
+        .lean()
+        .then((findData) => {
+            if (findData[0] === undefined) {
+                const data = {
+                    "long_url": reqUrl,
+                    "short_url": shortUrl()
+                }
+                create(res, data)
+            } else {
+                console.log('有進第一個data', findData)
+                res.render('show', { data: findData[0] })
+            }
+        })
+        .catch(error => {
+            console.log(error)
+        })
 })
 
 app.get('/:id', (req, res) => {
-    // res.send('有進到動態路由')
 
     urlModel.find({ short_url: req.params.id })
         .lean()
         .then((data) => {
-            console.log('data long就是', data[0].long_url)
             res.send(`<script>window.location ="${data[0].long_url}"</script>`)
 
         })
@@ -61,6 +72,8 @@ app.get('/:id', (req, res) => {
         })
 })
 
+
+//==========function
 function create(res, data) {
     console.log(data)
     urlModel.create(data)
