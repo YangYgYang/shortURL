@@ -1,18 +1,37 @@
-<div class="container">
-    <div class ="card w-75" >
+<div class="container-md d-flex align-items-center " style="height:100vh">
+    <div class ="card w-100 p-5" >
         <figure class="text-center">
             <blockquote class="blockquote">
-                <p>Short URL Generator</p>
+                <h1>URL Shortener</h1>
             </blockquote>
-            <figcaption class="blockquote-footer">Let get a shortURL!</figcaption>
         </figure>
-        <img src="https://assets-lighthouse.alphacamp.co/uploads/image/file/16716/ExportedContentImage_00.png"class="img-fluid">
-        <div class="">
-        <form action="" method="">
-            <input class="form-control" type="text" placeholder="your URL" name="url" value="http://localhost:3000/{{data.short_url}}" aria-label="default input example" disabled>
-        <button type="submit" class="btn btn-outline-primary">copy</button>
-        <a class="btn btn-outline-primary" href="/" role="button">Back</a>
-        </form>
+        <div class="text-center" >
+
+        <img class="img-fluid mb-5" style="height:15vh" src="https://assets-lighthouse.alphacamp.co/uploads/image/file/16716/ExportedContentImage_00.png">
+
         </div>
+
+
+        <form action="/shorturl/create" method="post">
+        <div calss ="row">
+            <h3 class ="col-10 offset-1">Success!Please use this:</h3>
+        </div>
+        <div class="row">
+            <div class="col-10 offset-1">
+            <input class="form-control" style="border:unset" type="text" placeholder="your URL" name="url" value="http://localhost:3000/{{data.short_url}}" aria-label="default input example" disabled>
+            </div> 
+        </div>
+        
+        <div class="row">
+        <div class="d-grid gap-2 col-6 mx-auto">
+               
+         <button type="submit" class="btn btn-outline-primary mt-2">Copy</button>
+           <a class="btn btn-outline-primary" href="/" role="button">Back</a>
+        </div>
+        </div>
+        </form>
+        
+
     </div>
 </div>
+
