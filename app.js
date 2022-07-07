@@ -43,6 +43,7 @@ app.post('/shorturl/create', (req, res) => {
     urlModel.find({ long_url: reqUrl })
         .lean()
         .then((findData) => {
+            //判斷request的長網址是否已有在資料庫中
             if (findData[0] === undefined) {
                 const data = {
                     "long_url": reqUrl,
