@@ -30,6 +30,10 @@ require('./config/mongoose')
 const urlModel = require('./models/urlExample')
 
 
+//==========setting static files
+app.use(express.static('public'))
+
+
 //==========router
 app.get('/', (req, res) => {
     res.render('index')
@@ -99,6 +103,7 @@ function shortUrl() {
     }
     return result
 }
+
 
 
 
