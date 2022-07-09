@@ -43,8 +43,7 @@ app.get('/', (req, res) => {
 
 app.post('/shorturl/create', (req, res) => {
     const reqUrl = req.body['url']
-    console.log('第一關', typeof(reqUrl), reqUrl)
-    urlModel.findOne({ long_url: reqUrl })
+    urlModel.find({ long_url: reqUrl })
         .lean()
         .then((findData) => {
             //判斷request的長網址是否已有在資料庫中
@@ -55,7 +54,6 @@ app.post('/shorturl/create', (req, res) => {
                 }
                 create(res, data)
             } else {
-                console.log('有進第一個data', findData)
                 res.render('show', { data: findData[0] })
             }
         })
