@@ -44,7 +44,7 @@ app.get('/', (req, res) => {
 app.post('/shorturl/create', (req, res) => {
     const reqUrl = req.body['url']
     console.log('第一關', typeof(reqUrl), reqUrl)
-    urlModel.find({ long_url: reqUrl })
+    urlModel.findOne({ long_url: reqUrl })
         .lean()
         .then((findData) => {
             //判斷request的長網址是否已有在資料庫中
