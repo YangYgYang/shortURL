@@ -98,7 +98,7 @@ function shortUrl() {
     const letter = lowerCaseLetters + upperCaseLetters + numbers
     let result = ''
     for (let i = 1; i < 6; i++) {
-        const index = Math.round(Math.random() * letter.length - 1)
+        const index = Math.trunc(Math.random() * letter.length)
         result += letter[index]
     }
     return result
