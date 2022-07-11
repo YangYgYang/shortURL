@@ -106,4 +106,4 @@ function shortUrl() {
 
 
 
-app.listen(port, () => { console.log(`express is running on http://localhost:${port}`) })
+app.listen(port, () => { console.log(`express is running on https://secure-beach-74931.herokuapp.com/${port}`) })
